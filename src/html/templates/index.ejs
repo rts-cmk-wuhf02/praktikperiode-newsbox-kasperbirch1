@@ -2,28 +2,32 @@
 <% include ../partials/header %>
 <% include ../partials/seachbar %>
 <main>
-    <section>
-        <% include ../partials/category %>
-        <% include ../partials/article %>
-        <% include ../partials/category %>
-        <% include ../partials/article %>
-        <% include ../partials/article %>
-        <% include ../partials/category %>
-        <% include ../partials/article %>
+    <section id="news-container">
+        <!-- from index.js -->
     </section>
 </main>
 <% include ../partials/footer %>
 <% include ../partials/after-footer %>
 
 
-<template id="featured-items">
-    <a id="link" href="">
-        <div class="featured__item">
-            <img class="featured__item__img" src="/assets/images/microphone.jpg" alt="images">
-            <div class="featured__item__text-container">
-                <h2 class="featured__item__text-container__title"></h2>
-                <p class="featured__item__text-container__paragraph"></p>
-            </div>
+<template class="category-template">
+    <div class="border-t border-b p-4 flex justify-between items-center">
+        <div class="h-8 w-8 grid items-center justify-center p-1 bg-white rounded-full shadow-md">
+            <i class="fas fa-tint text-theme"></i>
         </div>
-    </a>
+        <h3 class="flex-auto ml-2 uppercase font-medium">category</h3>
+        <i class="fas fa-chevron-down"></i>
+    </div>
+    <ul id="article-container"></ul>
+
+</template>
+
+<template class="article-template">
+    <article class="border-b p-4 flex justify-between">
+        <img class="m-2 h-16 w-16 object-cover rounded-full" src="/assets/images/avatar.jpg" alt="">
+        <div class="">
+            <h2 class="font-medium">Headline</h2>
+            <p class="text-themeblue">Hey Cody, you should definitely check out Yoga Six for hot yoga! They have…</p>
+        </div>
+    </article>
 </template>
