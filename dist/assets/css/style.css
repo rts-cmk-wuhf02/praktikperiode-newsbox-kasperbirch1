@@ -7,6 +7,9 @@ img {
   display: block;
   width: 100%; }
 
+.test {
+  display: none; }
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

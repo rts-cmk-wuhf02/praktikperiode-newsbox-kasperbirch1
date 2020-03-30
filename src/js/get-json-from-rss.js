@@ -10,28 +10,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 const jsonData = xml2json(srcDOM);
                 return jsonData
             }).then((data) => {
-                // console.log("Data.rss.channel.item", data.rss.channel.item);
-                /* variabler */
+                console.log("data", data);
+                /* variabler for category */
                 const container = document.getElementById("news-container");
-                /* variabler */
                 const categoryTemplate = document.querySelector(".category-template");
                 const categoryClone = categoryTemplate.content.cloneNode(true);
-                /* variabler */
-                const articleTemplate = document.querySelector(".article-template");
-                const articleClone = articleTemplate.content.cloneNode(true);
                 /* Erstatter categoryClone data */
                 categoryClone.querySelector("h3").innerText = category
-                /* Erstatter articleClone data */
-
+                /* foreach der printer aticlers  */
                 data.rss.channel.item.forEach(element => {
-                    // articleClone.querySelector("h2").innerText = category
-
+                    // console.log(category, element);
+                    // console.log(category, element['media:content'].attributes.url);
+                    /* variabler for article */
+                    const articleTemplate = document.querySelector(".article-template");
+                    const articleClone = articleTemplate.content.cloneNode(true);
+                    /* Erstatter articleClone data */
+                    articleClone.querySelector("h2").innerText = element.title
+                    articleClone.querySelector("p").innerText = element.description
+                    /* tjekker om  attributes findes og sætter images*/
+                    articleClone.querySelector("img").src = element['media:content'].attributes.url
+                    /* Tilføjer articleClone til categoryClone */
+                    categoryClone.querySelector("#article-container").appendChild(articleClone);
                 });
-
-                /* Tilføjer articleClone til categoryClone */
-                categoryClone.querySelector("#article-container").appendChild(articleClone);
-
-
                 /* Tilføjer categoryClone til container */
                 container.appendChild(categoryClone);
             })

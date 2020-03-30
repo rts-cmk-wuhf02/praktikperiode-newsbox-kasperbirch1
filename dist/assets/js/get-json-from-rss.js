@@ -11,28 +11,35 @@ window.addEventListener('DOMContentLoaded', function (event) {
       var jsonData = xml2json(srcDOM);
       return jsonData;
     }).then(function (data) {
-      // console.log("Data.rss.channel.item", data.rss.channel.item);
+      console.log("data", data);
+      /* variabler for category */
 
-      /* variabler */
       var container = document.getElementById("news-container");
-      /* variabler */
-
       var categoryTemplate = document.querySelector(".category-template");
       var categoryClone = categoryTemplate.content.cloneNode(true);
-      /* variabler */
-
-      var articleTemplate = document.querySelector(".article-template");
-      var articleClone = articleTemplate.content.cloneNode(true);
       /* Erstatter categoryClone data */
 
       categoryClone.querySelector("h3").innerText = category;
-      /* Erstatter articleClone data */
+      /* foreach der printer aticlers  */
 
-      data.rss.channel.item.forEach(function (element) {// articleClone.querySelector("h2").innerText = category
+      data.rss.channel.item.forEach(function (element) {
+        // console.log(category, element);
+        // console.log(category, element['media:content'].attributes.url);
+
+        /* variabler for article */
+        var articleTemplate = document.querySelector(".article-template");
+        var articleClone = articleTemplate.content.cloneNode(true);
+        /* Erstatter articleClone data */
+
+        articleClone.querySelector("h2").innerText = element.title;
+        articleClone.querySelector("p").innerText = element.description;
+        /* tjekker om  attributes findes og sætter images*/
+
+        articleClone.querySelector("img").src = element['media:content'].attributes.url;
+        /* Tilføjer articleClone til categoryClone */
+
+        categoryClone.querySelector("#article-container").appendChild(articleClone);
       });
-      /* Tilføjer articleClone til categoryClone */
-
-      categoryClone.querySelector("#article-container").appendChild(articleClone);
       /* Tilføjer categoryClone til container */
 
       container.appendChild(categoryClone);
