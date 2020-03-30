@@ -10,16 +10,30 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 const jsonData = xml2json(srcDOM);
                 return jsonData
             }).then((data) => {
-                console.log("Data.rss.channel", data.rss.channel);
-                const { title, link } = data.rss.channel
+                // console.log("Data.rss.channel.item", data.rss.channel.item);
                 /* variabler */
                 const container = document.getElementById("news-container");
+                /* variabler */
                 const categoryTemplate = document.querySelector(".category-template");
-                const clone = categoryTemplate.content.cloneNode(true);
-                /* Erstatter data */
-                clone.querySelector("h3").innerHTML = category
-                /* Tilføjer clone */
-                container.appendChild(clone);
+                const categoryClone = categoryTemplate.content.cloneNode(true);
+                /* variabler */
+                const articleTemplate = document.querySelector(".article-template");
+                const articleClone = articleTemplate.content.cloneNode(true);
+                /* Erstatter categoryClone data */
+                categoryClone.querySelector("h3").innerText = category
+                /* Erstatter articleClone data */
+
+                data.rss.channel.item.forEach(element => {
+                    // articleClone.querySelector("h2").innerText = category
+
+                });
+
+                /* Tilføjer articleClone til categoryClone */
+                categoryClone.querySelector("#article-container").appendChild(articleClone);
+
+
+                /* Tilføjer categoryClone til container */
+                container.appendChild(categoryClone);
             })
     }
     /* categoryArray */
@@ -31,7 +45,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 });
 
-/* add article  */
+/* add article
 clone.querySelector("#article-container").innerHTML += `
                 <li>
                     <article class="border-b p-4 flex justify-between">
@@ -42,5 +56,5 @@ clone.querySelector("#article-container").innerHTML += `
                         </div>
                     </article>
                 </li> `
-
+ */
 

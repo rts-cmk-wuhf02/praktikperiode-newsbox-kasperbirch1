@@ -11,21 +11,31 @@ window.addEventListener('DOMContentLoaded', function (event) {
       var jsonData = xml2json(srcDOM);
       return jsonData;
     }).then(function (data) {
-      console.log("Data.rss.channel", data.rss.channel);
-      var _data$rss$channel = data.rss.channel,
-          title = _data$rss$channel.title,
-          link = _data$rss$channel.link;
+      // console.log("Data.rss.channel.item", data.rss.channel.item);
+
+      /* variabler */
+      var container = document.getElementById("news-container");
       /* variabler */
 
-      var container = document.getElementById("news-container");
       var categoryTemplate = document.querySelector(".category-template");
-      var clone = categoryTemplate.content.cloneNode(true);
-      /* Erstatter data */
+      var categoryClone = categoryTemplate.content.cloneNode(true);
+      /* variabler */
 
-      clone.querySelector("h3").innerHTML = category;
-      /* Tilføjer clone */
+      var articleTemplate = document.querySelector(".article-template");
+      var articleClone = articleTemplate.content.cloneNode(true);
+      /* Erstatter categoryClone data */
 
-      container.appendChild(clone);
+      categoryClone.querySelector("h3").innerText = category;
+      /* Erstatter articleClone data */
+
+      data.rss.channel.item.forEach(function (element) {// articleClone.querySelector("h2").innerText = category
+      });
+      /* Tilføjer articleClone til categoryClone */
+
+      categoryClone.querySelector("#article-container").appendChild(articleClone);
+      /* Tilføjer categoryClone til container */
+
+      container.appendChild(categoryClone);
     });
   }
   /* categoryArray */
@@ -38,6 +48,15 @@ window.addEventListener('DOMContentLoaded', function (event) {
     getRssCategory(category);
   });
 });
-/* add article  */
-
-clone.querySelector("#article-container").innerHTML += "\n                <li>\n                    <article class=\"border-b p-4 flex justify-between\">\n                        <img class=\"m-2 h-16 w-16 object-cover rounded-full\" src=".concat(item.media.content[0].url[0], " alt=").concat(item.title, ">\n                        <div class=\"\">\n                            <h2 class=\"font-medium\">").concat(item.title, "</h2>\n                            <p class=\"text-themeblue\">").concat(item.description, "</p>\n                        </div>\n                    </article>\n                </li> ");
+/* add article
+clone.querySelector("#article-container").innerHTML += `
+                <li>
+                    <article class="border-b p-4 flex justify-between">
+                        <img class="m-2 h-16 w-16 object-cover rounded-full" src=${item.media.content[0].url[0]} alt=${item.title}>
+                        <div class="">
+                            <h2 class="font-medium">${item.title}</h2>
+                            <p class="text-themeblue">${item.description}</p>
+                        </div>
+                    </article>
+                </li> `
+ */
