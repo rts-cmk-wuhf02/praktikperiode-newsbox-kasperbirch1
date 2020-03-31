@@ -15,7 +15,10 @@ window.addEventListener('DOMContentLoaded', function (event) {
         reject(console.log("FEJL:", err));
       });
     });
-  }
+  } // getRssArticles 
+
+
+  function printArticles(data) {}
   /* categoryArray */
 
 
@@ -24,18 +27,25 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
   categoryArray.forEach(function (category) {
     getRssCategory(category).then(function (data) {
-      console.log("data", data);
-      /* variabler for category */
+      // console.log("data2222", data);
 
+      /* variabler for category */
       var container = document.getElementById("news-container");
       var categoryTemplate = document.querySelector(".category-template");
       var categoryClone = categoryTemplate.content.cloneNode(true);
       /* Erstatter categoryClone data */
 
       categoryClone.querySelector("h3").innerText = category;
-      /* foreach der printer aticlers  */
+      /* setAttribute */
 
-      data.rss.channel.item.forEach(function (element) {
+      categoryClone.querySelector(".fa-chevron-down").setAttribute('data-category', category);
+      /* Tilføjer categoryClone til container */
+
+      container.appendChild(categoryClone);
+      return data;
+    }).then(function (data) {
+      /* foreach der printer aticlers  */
+      data.rss.channel.item.forEach(function (element, index) {
         // console.log(category, element);
 
         /* variabler for article */
@@ -44,19 +54,11 @@ window.addEventListener('DOMContentLoaded', function (event) {
         /* Erstatter articleClone data */
 
         articleClone.querySelector("h2").innerText = element.title;
-        articleClone.querySelector("p").innerText = element.description;
-        /* FEJL */
-
-        articleClone.querySelector("img").src = element['media:content'].attributes.url;
-        /* FEJL */
+        articleClone.querySelector("p").innerText = element.description; // articleClone.querySelector("img").src = element['media:content'].attributes.url
 
         /* Tilføjer articleClone til categoryClone */
-
-        categoryClone.querySelector(".article-container").appendChild(articleClone);
+        // document.querySelectorAll(".article-container")[index].appendChild(articleClone);
       });
-      /* Tilføjer categoryClone til container */
-
-      container.appendChild(categoryClone);
     });
   });
 }); // console.log(category, element['media:content'].attributes.url);
