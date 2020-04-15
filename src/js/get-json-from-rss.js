@@ -4,7 +4,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
     /* kalder functioner efter hianden */
     categoryArray.forEach(category => {
         printCategories(category)
+            .then(data => { GetCategoryArticles(data) })
     });
+
+    /* tilføjer addEventListener til alle .category-div */
+    const btns = document.querySelectorAll(".category-div")
+    btns.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const category = e.target.parentElement.getAttribute('data-category')
+            console.log("clicket", category);
+            document.querySelector(`ul[data-category=${category}]`).classList.toggle("hidden")
+        })
+    });
+
+
     ///////////////////////////////////////////////////////////////////////////////////////
     /* printCategories */
     function printCategories(category) {
@@ -24,15 +37,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         })
     }
     ///////////////////////////////////////////////////////////////////////////////////////
-    /* tilføjer addEventListener til alle .category-div */
-    const btns = document.querySelectorAll(".category-div")
-    btns.forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            const category = e.target.parentElement.getAttribute('data-category')
-            GetCategoryArticles(category)
-        })
-    });
-
+    /* GetCategoryArticles */
     function GetCategoryArticles(category) {
         const categoryVariable = category
         fetch(`https://api.nytimes.com/services/xml/rss/nyt/${category}.xml`)
@@ -66,46 +71,3 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-/* getRssArticles */
-// function getRssArticles(category) {
-//     const categoryVariable = category
-//     return new Promise((resolve, reject) => {
-//         fetch(`https://api.nytimes.com/services/xml/rss/nyt/${category}.xml`)
-//             .then((response) => {
-//                 return response.text();
-//             }).then((data) => {
-//                 const parser = new DOMParser();
-//                 const srcDOM = parser.parseFromString(data, "application/xml");
-//                 const jsonData = xml2json(srcDOM);
-//                 return jsonData
-//             })
-//             .then((data) => {
-//                 // console.log("testdata", data);
-//                 /* foreach der printer aticlers  */
-//                 data.rss.channel.item.forEach((element, index) => {
-//                     // console.log(category, element);
-//                     /* variabler for article */
-//                     const articleTemplate = document.querySelector(".article-template");
-//                     const articleClone = articleTemplate.content.cloneNode(true);
-//                     /* Erstatter articleClone data */
-//                     articleClone.querySelector("h2").innerText = element.title
-//                     articleClone.querySelector("p").innerText = element.description
-//                     articleClone.querySelector("img").src = element['media:content'].attributes.url
-//                     /* Tilføjer articleClone til categoryClone */
-//                     document.querySelectorAll(".article-container")[index].appendChild(articleClone);
-//                 });
-
-//             })
-
-//     })
-// }
